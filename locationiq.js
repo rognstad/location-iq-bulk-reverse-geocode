@@ -10,7 +10,14 @@ if (!argv.key || typeof(argv.key) !== 'string') {
 }
 
 console.log('Reading input.csv');
-var csv = fs.readFileSync('input.csv', {encoding: 'utf8'});
+var csv;
+try {
+    csv = fs.readFileSync('input.csv', {encoding: 'utf8'});
+}
+catch (e) {
+    console.log('Error! Cannot read input.csv. It must exist.');
+    return;
+}
 
 var json = csvjson.toObject(csv, {
     delimiter: ',',
@@ -21,8 +28,15 @@ var rowNum = 1;
 
 var reverseGeocode = function reverseGeocodeF (row, cb) {
     console.log('Working on row ' + rowNum);
-    rowNum++;
+
+    if (!row.Latitude) {
+        console.log('Error! Row ' + rowNum + ' does not have "Latitude"');
+    }
+    if (!row.Longitude) {
+        console.log('Error! Row ' + rowNum + ' does not have "Longitude"');
+    }
     var url = 'http://locationiq.org/v1/reverse.php?format=json&key=' + argv.key + '&lat=' + row.Latitude + '&lon=' + row.Longitude;
+    rowNum++;
     request.get(url, function (err, res, body) {
         setTimeout(function () {
             if (err) {
