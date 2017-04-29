@@ -1,0 +1,15 @@
+{
+  "name": "location-iq-bulk-reverse-geocode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "locationiq.js",
+  "scripts": {},
+  "author": "Matt Rognstad",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.3.0",
+    "csvjson": "^4.1.3",
+    "minimist": "^1.2.0",
+    "request": "^2.81.0"
+  }
+}
